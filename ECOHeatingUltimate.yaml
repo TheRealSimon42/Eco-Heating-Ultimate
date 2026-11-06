@@ -149,7 +149,7 @@ blueprint:
           name: Default Eco Temperature
           description:
             This is the temperature which is set when someone is at home (Input
-            Boolean above) and no other temperature is set for the given tiemframe.
+            Boolean above) and no other temperature is set for the given timeframe.
           default: 17
           selector:
             number:
@@ -561,7 +561,7 @@ action:
                         sequence:
                           - service: climate.set_temperature
                             data:
-                              temperature: !input day_eco_temprature
+                              temperature: !input evening_eco_temprature
                             target:
                               entity_id: !input climate_entity
                       - alias: State night
@@ -611,7 +611,7 @@ action:
                         sequence:
                           - service: climate.set_temperature
                             data:
-                              temperature: !input day_comfort_temprature
+                              temperature: !input evening_comfort_temprature
                             target:
                               entity_id: !input climate_entity
                       - alias: State night
@@ -631,6 +631,12 @@ action:
             entity_id: !input presence_detector
             state: "off"
         sequence:
+          - condition: not
+            conditions:
+              - condition: template
+                value_template:
+                  "{{ (state_attr(climate_entity_var, 'temperature')
+                  | float(0)) == away_temprature }}"
           - service: climate.set_temperature
             data:
               temperature: !input away_temprature
