@@ -149,7 +149,7 @@ blueprint:
           name: Default Eco Temperature
           description:
             This is the temperature which is set when someone is at home (Input
-            Boolean above) and no other temperature is set for the given tiemframe.
+            Boolean above) and no other temperature is set for the given timeframe.
           default: 17
           selector:
             number:
